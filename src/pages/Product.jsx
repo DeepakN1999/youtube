@@ -1,17 +1,16 @@
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
-import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import Newsletter from "../components/Newsletter";
 import { mobile } from "../responsive";
+import { popularProducts } from "../data";
 
 const Container = styled.div``;
 
 const Wrapper = styled.div`
   padding: 50px;
   display: flex;
-  ${mobile({ padding: "10px", flexDirection:"column" })}
+  ${mobile({ padding: "10px", flexDirection: "column" })}
 `;
 
 const ImgContainer = styled.div`
@@ -119,7 +118,6 @@ const Product = () => {
   return (
     <Container>
       <Navbar />
-      <Announcement />
       <Wrapper>
         <ImgContainer>
           <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
@@ -162,7 +160,6 @@ const Product = () => {
           </AddContainer>
         </InfoContainer>
       </Wrapper>
-      <Newsletter />
       <Footer />
     </Container>
   );

@@ -1,8 +1,6 @@
 import styled from "styled-components";
 import Navbar from "../components/Navbar";
-import Announcement from "../components/Announcement";
 import Products from "../components/Products";
-import Newsletter from "../components/Newsletter";
 import Footer from "../components/Footer";
 import { mobile } from "../responsive";
 
@@ -34,13 +32,13 @@ const Select = styled.select`
   margin-right: 20px;
   ${mobile({ margin: "10px 0px" })}
 `;
-const Option = styled.option``;
+const Option = styled.option`
+`;
 
 const ProductList = () => {
   return (
     <Container>
       <Navbar />
-      <Announcement />
       <Title>Dresses</Title>
       <FilterContainer>
         <Filter>
@@ -71,13 +69,12 @@ const ProductList = () => {
           <FilterText>Sort Products:</FilterText>
           <Select>
             <Option selected>Newest</Option>
-            <Option>Price (asc)</Option>
-            <Option>Price (desc)</Option>
+            <Option>Casuals</Option>
+            <Option>Trending</Option>
           </Select>
         </Filter>
       </FilterContainer>
       <Products />
-      <Newsletter />
       <Footer />
     </Container>
   );

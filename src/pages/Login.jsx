@@ -1,14 +1,17 @@
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
-import {mobile} from "../responsive";
+import { mobile } from "../responsive";
+import NavBar from "../components/Navbar"
 
 const Container = styled.div`
   width: 100vw;
   height: 100vh;
   background: linear-gradient(
-      rgba(255, 255, 255, 0.5),
-      rgba(255, 255, 255, 0.5)
+      rgba(255, 255, 255, 0.3),
+      rgba(255, 255, 255, 0.3)
     ),
-    url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940")
+    url("https://content.api.news/v3/images/bin/22445f138e6a286cd9318cfed730a7a8")
       center;
   background-size: cover;
   display: flex;
@@ -58,20 +61,62 @@ const Link = styled.a`
 `;
 
 const Login = () => {
+  const [loginData, setLoginData] = useState({
+    email: "",
+    password: "",
+  });
+  const navigate = useNavigate(); // Initialize useNavigate for redirection
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setLoginData((prevData) => ({
+      ...prevData,
+      [name]: value,
+    }));
+  };
+  const handleLogin = (e) => {
+    e.preventDefault();
+    // Retrieve user data from local storage
+    const storedUserData = JSON.parse(localStorage.getItem("user"));
+    // Check if the entered credentials match the stored data
+    if (
+      storedUserData &&
+      storedUserData.email === loginData.email &&
+      storedUserData.password === loginData.password
+    ) {
+      // Display alert and navigate to home page
+      alert("Login successful!");
+      navigate("/"); // Navigate to your home page route
+    } else {
+      // Display alert for unsuccessful login
+      alert("Invalid email or password. Please try again.");
+    }
+  };
   return (
-    <Container>
-      <Wrapper>
-        <Title>SIGN IN</Title>
-        <Form>
-          <Input placeholder="username" />
-          <Input placeholder="password" />
-          <Button>LOGIN</Button>
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
-        </Form>
-      </Wrapper>
-    </Container>
+    <>
+      <NavBar />
+      <Container>
+        <Wrapper>
+          <Title>SIGN IN</Title>
+          <Form onSubmit={handleLogin}>
+            <Input
+              placeholder="email"
+              name="email"
+              value={loginData.email}
+              onChange={handleInputChange}
+            />
+            <Input
+              placeholder="password"
+              name="password"
+              value={loginData.password}
+              onChange={handleInputChange}
+            />
+            <Button type="submit">LOGIN</Button>
+            <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
+            <Link href="/register">CREATE A NEW ACCOUNT</Link>
+          </Form>
+        </Wrapper>
+      </Container>
+    </>
   );
 };
-
 export default Login;

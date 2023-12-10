@@ -41,7 +41,7 @@ const Wrapper = styled.div`
 
 const Slide = styled.div`
   width: 100vw;
-  height: 100vh;
+  height: 105vh;
   display: flex;
   align-items: center;
   background-color: #${(props) => props.bg};
@@ -53,7 +53,7 @@ const ImgContainer = styled.div`
 `;
 
 const Image = styled.img`
-  height: 80%;
+  height: 90%;
 `;
 
 const InfoContainer = styled.div`
@@ -72,13 +72,6 @@ const Desc = styled.p`
   letter-spacing: 3px;
 `;
 
-const Button = styled.button`
-  padding: 10px;
-  font-size: 20px;
-  background-color: transparent;
-  cursor: pointer;
-`;
-
 const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
   const handleClick = (direction) => {
@@ -88,6 +81,8 @@ const Slider = () => {
       setSlideIndex(slideIndex < 2 ? slideIndex + 1 : 0);
     }
   };
+
+
 
   return (
     <Container>
@@ -103,7 +98,6 @@ const Slider = () => {
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>
-              <Button>SHOW NOW</Button>
             </InfoContainer>
           </Slide>
         ))}

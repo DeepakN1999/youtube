@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
 
+
 const Container = styled.div`
   flex: 1;
   margin: 3px;
@@ -33,22 +34,12 @@ const Title = styled.h1`
     margin-bottom: 20px;
 `;
 
-const Button = styled.button`
-    border:none;
-    padding: 10px;
-    background-color: white;
-    color:gray;
-    cursor: pointer;
-    font-weight: 600;
-`;
-
 const CategoryItem = ({ item }) => {
   return (
     <Container>
       <Image src={item.img} />
       <Info>
         <Title>{item.title}</Title>
-        <Button>SHOP NOW</Button>
       </Info>
     </Container>
   );
