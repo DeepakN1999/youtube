@@ -1,8 +1,5 @@
-import {
-  SearchOutlined,
-  ShoppingCartOutlined,
-} from "@material-ui/icons";
 import styled from "styled-components";
+import { Link } from "react-router-dom";
 
 const Info = styled.div`
   opacity: 0;
@@ -40,36 +37,24 @@ const Image = styled.img`
   height: 75%;
   z-index: 2;
 `;
-
-const Icon = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  background-color: white;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin: 10px;
-  transition: all 0.5s ease;
-  &:hover {
-    background-color: #e9f5f5;
-    transform: scale(1.1);
-  }
+const Prize = styled.h3`
+  font-size:20px;
+   color:white;
 `;
 
 const Product = ({ item }) => {
   return (
-    <Container>
-      <Image src={item.img} />
-      <Info>
-        <Icon>
-          <ShoppingCartOutlined />
-        </Icon>
-        <Icon>
-          <SearchOutlined />
-        </Icon>
-      </Info>
-    </Container>
+    <>
+      <Container>
+        <Image src={item.img}></Image>
+        <Link to="/product">
+          <Info >
+            <Prize>PRIZE : ${item.amount}</Prize>
+          </Info>
+        </Link>
+      </Container>
+
+    </>
   );
 };
 

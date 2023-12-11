@@ -3,7 +3,6 @@ import styled from "styled-components";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
-import { popularProducts } from "../data";
 
 const Container = styled.div``;
 
@@ -114,13 +113,13 @@ const Button = styled.button`
   }
 `;
 
-const Product = () => {
+const Product = (item) => {
   return (
     <Container>
       <Navbar />
       <Wrapper>
         <ImgContainer>
-          <Image src="https://i.ibb.co/S6qMxwr/jean.jpg" />
+          <Image src={item.img} />
         </ImgContainer>
         <InfoContainer>
           <Title>Denim Jumpsuit</Title>
@@ -131,7 +130,7 @@ const Product = () => {
             tristique tortor pretium ut. Curabitur elit justo, consequat id
             condimentum ac, volutpat ornare.
           </Desc>
-          <Price>$ 20</Price>
+          <Price>${item.amount}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
