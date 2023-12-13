@@ -73,6 +73,7 @@ const Login = () => {
       [name]: value,
     }));
   };
+
   const handleLogin = (e) => {
     e.preventDefault();
     // Retrieve user data from local storage
@@ -84,6 +85,7 @@ const Login = () => {
       storedUserData.password === loginData.password
     ) {
       // Display alert and navigate to home page
+      localStorage.setItem("IsLoggedIn", true);
       alert("Login successful!");
       navigate("/"); // Navigate to your home page route
     } else {

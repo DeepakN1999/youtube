@@ -1,8 +1,11 @@
+import React, { useState } from "react"
 import { Add, Remove } from "@material-ui/icons";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
+import { useParams } from "react-router-dom";
+import { popularProducts } from "../data";
 
 const Container = styled.div``;
 
@@ -19,7 +22,7 @@ const ImgContainer = styled.div`
 const Image = styled.img`
   width: 100%;
   height: 90vh;
-  object-fit: cover;
+  object-fit: fit;
   ${mobile({ height: "40vh" })}
 `;
 
@@ -113,16 +116,48 @@ const Button = styled.button`
   }
 `;
 
-const Product = (item) => {
+const ProductDetails = ({ addToCart, cart = [] }) => {
+  const { id } = useParams();
+  const product = popularProducts.find((item) => item.id === parseInt(id));
+  const [quantity, setQuantity] = useState(1);
+
+  const handleDecrease = () => {
+    if (quantity > 1) {
+      setQuantity(quantity - 1);
+    }
+  };
+  const handleIncrease = () => {
+    setQuantity(quantity + 1);
+  };
+
+  const handleAddToCart = () => {
+
+    const productIndex = cart.findIndex((cartProduct) => cartProduct.id === product.id);
+    if (productIndex !== -1) {
+      product.quantity = quantity;
+      addToCart(product);
+
+    } else {
+      product.quantity = quantity;
+      addToCart(product);
+    }
+    alert("Item added successfully");
+    // Reset quantity to 1 after adding to the cart
+    setQuantity(1);
+  };
+  if (!product) {
+    return <div>Loading...</div>; // or handle the case where the product is not found
+  }
+
   return (
     <Container>
-      <Navbar />
-      <Wrapper>
+      <Navbar cart={cart} />
+      <Wrapper >
         <ImgContainer>
-          <Image src={item.img} />
+          <Image src={product.img} alt={product.id} />
         </ImgContainer>
         <InfoContainer>
-          <Title>Denim Jumpsuit</Title>
+          <Title>{product.title}</Title>
           <Desc>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
             venenatis, dolor in finibus malesuada, lectus ipsum porta nunc, at
@@ -130,7 +165,7 @@ const Product = (item) => {
             tristique tortor pretium ut. Curabitur elit justo, consequat id
             condimentum ac, volutpat ornare.
           </Desc>
-          <Price>${item.amount}</Price>
+          <Price>${product.amount}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
@@ -151,17 +186,19 @@ const Product = (item) => {
           </FilterContainer>
           <AddContainer>
             <AmountContainer>
-              <Remove />
-              <Amount>1</Amount>
-              <Add />
+              <Remove onClick={handleDecrease} />
+              <Amount>{quantity}</Amount>
+              <Add onClick={handleIncrease} />
             </AmountContainer>
-            <Button>ADD TO CART</Button>
-          </AddContainer>
-        </InfoContainer>
-      </Wrapper>
+            <Button onClick={handleAddToCart}>ADD TO CART</Button>
+          </AddContainer >
+        </InfoContainer >
+      </Wrapper >
       <Footer />
-    </Container>
+    </Container >
   );
 };
 
-export default Product;
+export default ProductDetails;
+
+

@@ -47,7 +47,7 @@ const Product = ({ item }) => {
     <>
       <Container>
         <Image src={item.img}></Image>
-        <Link to="/product">
+        <Link to={`/productDetails/${item.id}`} >
           <Info >
             <Prize>PRIZE : ${item.amount}</Prize>
           </Info>

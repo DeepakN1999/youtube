@@ -4,6 +4,7 @@ import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Container = styled.div`
   height: 60px;
@@ -68,6 +69,18 @@ const MenuItem = styled.div`
 `;
 
 const Navbar = () => {
+  const navigate = useNavigate();
+
+  const isLoggedIn = JSON.parse(localStorage.getItem('IsLoggedIn'));
+
+  const handleLogout = () => {
+    // Perform logout actions here, such as removing user data from local storage
+    localStorage.removeItem('user');
+    localStorage.setItem("IsLoggedIn", false);
+    // Redirect to the home page after logout
+    navigate('/');
+  };
+
   return (
     <Container>
       <Wrapper>
@@ -85,26 +98,34 @@ const Navbar = () => {
           <Link to="/">
             <MenuItem>HOME</MenuItem>
           </Link>
-          <Link to="/productList">
-            <MenuItem>PRODUCTS</MenuItem>
-          </Link>
-          <Link to="/register">
-            <MenuItem>REGISTER</MenuItem>
-          </Link>
-          <Link to="/login">
-            <MenuItem>SIGN IN</MenuItem>
-          </Link>
-          <Link to="/cart">
-            <MenuItem>
-              <Badge badgeContent={4} color="primary">
-                <ShoppingCartOutlined />
-              </Badge>
-            </MenuItem>
-          </Link>
+          {isLoggedIn ? (
+            <>
+              <Link to="/productList">
+                <MenuItem>PRODUCTS</MenuItem>
+              </Link>
+              <MenuItem> MY PROFILE</MenuItem>
+              <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
+              <Link to="/cart">
+                <MenuItem>
+                  <Badge color="primary">
+                    <ShoppingCartOutlined />
+                  </Badge>
+                </MenuItem>
+              </Link>
+            </>
+          ) : (
+            <>
+              <Link to="/register">
+                <MenuItem>REGISTER</MenuItem>
+              </Link>
+              <Link to="/login">
+                <MenuItem>SIGN IN</MenuItem>
+              </Link>
+            </>
+          )}
         </Right>
       </Wrapper>
-    </Container >
+    </Container>
   );
 };
-
 export default Navbar;
