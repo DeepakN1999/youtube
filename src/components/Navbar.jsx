@@ -68,15 +68,28 @@ const MenuItem = styled.div`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
+const WelcomeText = styled.span`
+ font-size: 14px;
+ margin: 15px;
+ color : orange;
+`;
+
+const UserName = styled.span`
+ text-transform: uppercase;
+`;
+
 const Navbar = () => {
   const navigate = useNavigate();
 
   const isLoggedIn = JSON.parse(localStorage.getItem('IsLoggedIn'));
 
+  // Fetch user name from local storage
+  const userName = JSON.parse(localStorage.getItem('user'))?.username || '';
+
   const handleLogout = () => {
     // Perform logout actions here, such as removing user data from local storage
-    localStorage.removeItem('user');
-    localStorage.setItem("IsLoggedIn", false);
+    localStorage.clear('user');
+    // localStorage.setItem("IsLoggedIn", false);
     // Redirect to the home page after logout
     navigate('/');
   };
@@ -103,7 +116,8 @@ const Navbar = () => {
               <Link to="/productList">
                 <MenuItem>PRODUCTS</MenuItem>
               </Link>
-              <MenuItem> MY PROFILE</MenuItem>
+              <WelcomeText>WELCOME</WelcomeText>
+              <UserName>{userName}</UserName>
               <MenuItem onClick={handleLogout}>LOGOUT</MenuItem>
               <Link to="/cart">
                 <MenuItem>

@@ -64,6 +64,7 @@ const Register = () => {
     email: "",
     password: "",
   });
+  const [emailError, setEmailError] = useState("");
   const navigate = useNavigate(); // Initialize history for redirection
 
   const handleInputChange = (e) => {
@@ -73,8 +74,24 @@ const Register = () => {
       [name]: value,
     }));
   };
+
+  const validateEmail = (email) => {
+    // Regular expression for a valid email format
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
   const handleCreateAccount = (e) => {
     e.preventDefault();
+
+    // Validate email before creating an account
+    if (!validateEmail(userData.email)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    }
+    // Clear previous email error if any
+    setEmailError("");
+
     // Store user data in local storage
     localStorage.setItem("user", JSON.stringify(userData));
     // Display alert and redirect to login page
@@ -101,7 +118,9 @@ const Register = () => {
               value={userData.email}
               onChange={handleInputChange}
             />
+            {emailError && <span style={{ color: "red" }}>{emailError}</span>}
             <Input
+              type="password"
               placeholder="password"
               name="password"
               value={userData.password}

@@ -108,10 +108,20 @@ const Button = styled.button`
  color: white;
  font-weight: 600;
 `;
-const Cart = ({ cart, addToCart, removeFromCart }) => {
+const Cart = ({ cart, addToCart, removeFromCart, clearCart }) => {
 
   const calculateTotal = () => {
     return cart.reduce((total, item) => total + (item.amount || 0) * (item.quantity || 1), 0);
+  };
+
+  const handleCheckout = () => {
+    const isConfirmed = window.confirm("Are you sure you want to place the order?");
+    if (isConfirmed) {
+      clearCart();
+      // Clear the cart after the order is successful
+      alert("Order successful!");
+      // Clear the cart
+    }
   };
 
   return (
@@ -149,7 +159,6 @@ const Cart = ({ cart, addToCart, removeFromCart }) => {
                         <Remove onClick={() => removeFromCart(cartProduct.id)} />
                         <ProductAmount>{cartProduct.quantity}</ProductAmount>
                         <Add onClick={() => addToCart(cartProduct)} />
-                        {/* <Add onClick={() => setQuantity(quantity + 1)} /> */}
                       </ProductAmountContainer>
                       <ProductPrice>${cartProduct.amount * cartProduct.quantity}</ProductPrice>
                     </PriceDetail>
@@ -177,7 +186,7 @@ const Cart = ({ cart, addToCart, removeFromCart }) => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {calculateTotal()}</SummaryItemPrice>
             </SummaryItem>
-            <Button>CHECKOUT NOW</Button>
+            <Button onClick={handleCheckout}>CHECKOUT NOW</Button>
           </Summary>
         </Bottom>
       </Wrapper>

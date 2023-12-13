@@ -21,13 +21,18 @@ const App = () => {
     setCart(updatedCart);
   };
 
+  const clearCart = () => {
+    // Update the cart state to an empty array
+    setCart([]);
+  };
+
   return (
     <BrowserRouter>
       <Routes >
         <Route path="/" element={<Home />} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/cart" element={<Cart cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} />} />
+        <Route path="/cart" element={<Cart cart={cart} addToCart={addToCart} removeFromCart={removeFromCart} clearCart={clearCart} />} />
         <Route path="/productList" element={<ProductList />} />
         <Route path="/productDetails/:id" element={<ProductDetails addToCart={addToCart} />} />
       </Routes>
